@@ -44,5 +44,20 @@ public class ItemPedido
 
     public decimal CalcularSubtotal() => Produto.Preco * Quantidade;
 }
+public class Pedido
+{
+    public int Id { get; private set; }
+    public Cliente Cliente { get; private set; }
+    public List<ItemPedido> Itens { get; private set; }
+    public DateTime Data { get; private set; }
+
+    public Pedido(int id, Cliente cliente, List<ItemPedido> itens)
+    {
+        Id = id;
+        Cliente = cliente;
+        Itens = itens;
+        Data = DateTime.Now;
+    }
+}
 
 
