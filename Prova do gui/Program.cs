@@ -176,6 +176,7 @@ class Program
             Console.WriteLine($"Pedido #{p.Id} - Cliente: {p.Cliente.Nome} - Total: {p.ValorTotal:C}");
         }
     }
+
 }
 
 
