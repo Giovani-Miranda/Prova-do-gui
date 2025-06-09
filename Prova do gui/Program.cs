@@ -50,6 +50,7 @@ public class Pedido
     public Cliente Cliente { get; private set; }
     public List<ItemPedido> Itens { get; private set; }
     public DateTime Data { get; private set; }
+    public decimal ValorTotal { get; private set; }
 
     public Pedido(int id, Cliente cliente, List<ItemPedido> itens)
     {
@@ -57,6 +58,11 @@ public class Pedido
         Cliente = cliente;
         Itens = itens;
         Data = DateTime.Now;
+        ValorTotal = CalcularValorTotal();
+    }
+    private decimal CalcularValorTotal()
+    {
+        return Itens.Sum(item => item.CalcularSubtotal());
     }
 }
 
