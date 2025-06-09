@@ -136,6 +136,14 @@ public class PedidoRepository : IPedidoRepository
     public void Adicionar(Pedido pedido) => _pedidos.Add(pedido);
     public List<Pedido> ListarTodos() => _pedidos;
 }
+public class ConsoleLogger : ILoggerService
+{
+    public void Log(string mensagem)
+    {
+        Console.WriteLine($"LOG: {mensagem}");
+    }
+}
+
 
 
 
