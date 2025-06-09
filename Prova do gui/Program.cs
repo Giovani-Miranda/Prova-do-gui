@@ -129,6 +129,14 @@ public class PedidoFactory
         return pedido;
     }
 }
+public class PedidoRepository : IPedidoRepository
+{
+    private readonly List<Pedido> _pedidos = new List<Pedido>();
+
+    public void Adicionar(Pedido pedido) => _pedidos.Add(pedido);
+    public List<Pedido> ListarTodos() => _pedidos;
+}
+
 
 
 
