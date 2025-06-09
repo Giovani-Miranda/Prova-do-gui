@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 public class Produto
 {
     public int Id { get; private set; }
@@ -141,6 +141,40 @@ public class ConsoleLogger : ILoggerService
     public void Log(string mensagem)
     {
         Console.WriteLine($"LOG: {mensagem}");
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        ILoggerService logger = new ConsoleLogger();
+        IPedidoRepository pedidoRepo = new PedidoRepository();
+
+        var cliente = new Cliente(1, "Maria", "maria@email.com", "12345678900");
+        var produto1 = new Produto(1, "Notebook", 3000, "Eletrônicos");
+        var produto2 = new Produto(2, "Mouse", 100, "Periféricos");
+
+        var itens = new List<ItemPedido>
+        {
+            new ItemPedido(produto1, 1),
+            new ItemPedido(produto2, 3)
+        };
+
+        var descontos = new List<IDescontoStrategy>
+        {
+            new DescontoPorCategoria(),
+            new DescontoPorQuantidade()
+        };
+
+        var pedido = PedidoFactory.CriarPedido(1, cliente, itens, descontos);
+        pedidoRepo.Adicionar(pedido);
+        logger.Log("Pedido criado com sucesso.");
+
+        Console.WriteLine("RELATÓRIO DE PEDIDOS:");
+        foreach (var p in pedidoRepo.ListarTodos())
+        {
+            Console.WriteLine($"Pedido #{p.Id} - Cliente: {p.Cliente.Nome} - Total: {p.ValorTotal:C}");
+        }
     }
 }
 
