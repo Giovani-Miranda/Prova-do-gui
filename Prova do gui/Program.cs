@@ -104,6 +104,7 @@ public class DescontoPorQuantidade : IDescontoStrategy
         }
         return desconto;
     }
+
 }
 
 
