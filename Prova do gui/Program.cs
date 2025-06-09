@@ -65,5 +65,19 @@ public class Pedido
         return Itens.Sum(item => item.CalcularSubtotal());
     }
 }
+public interface IDescontoStrategy
+{
+    decimal CalcularDesconto(Pedido pedido);
+}
+public interface ILoggerService
+{
+    void Log(string mensagem);
+}
+
+public interface IPedidoRepository
+{
+    void Adicionar(Pedido pedido);
+    List<Pedido> ListarTodos();
+}
 
 
