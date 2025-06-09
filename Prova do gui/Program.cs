@@ -47,6 +47,10 @@ public class ItemPedido
 }
 public class Pedido
 {
+    public void AplicarDesconto(decimal valorDesconto)
+    {
+        ValorTotal -= valorDesconto;
+    }
 
     public int Id { get; private set; }
     public Cliente Cliente { get; private set; }
@@ -118,7 +122,8 @@ public class PedidoFactory
         foreach (var estrategia in estrategiasDeDesconto)
         {
             var desconto = estrategia.CalcularDesconto(pedido);
-            pedido.ValorTotal -= desconto;
+            pedido.AplicarDesconto(desconto);
+
         }
 
         return pedido;
