@@ -79,5 +79,32 @@ public interface IPedidoRepository
     void Adicionar(Pedido pedido);
     List<Pedido> ListarTodos();
 }
+public class DescontoPorCategoria : IDescontoStrategy
+{
+    public decimal CalcularDesconto(Pedido pedido)
+    {
+        var desconto = 0m;
+        foreach (var item in pedido.Itens)
+        {
+            if (item.Produto.Categoria == "Eletrônicos")
+                desconto += item.CalcularSubtotal() * 0.1m;
+        }
+        return desconto;
+    }
+}
+public class DescontoPorQuantidade : IDescontoStrategy
+{
+    public decimal CalcularDesconto(Pedido pedido)
+    {
+        var desconto = 0m;
+        foreach (var item in pedido.Itens)
+        {
+            if (item.Quantidade >= 3)
+                desconto += item.CalcularSubtotal() * 0.05m;
+        }
+        return desconto;
+    }
+}
+
 
 
