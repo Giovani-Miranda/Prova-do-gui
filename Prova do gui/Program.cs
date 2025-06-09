@@ -1,4 +1,5 @@
-﻿public class Produto
+﻿
+public class Produto
 {
     public int Id { get; private set; }
     public string Nome { get; private set; }
@@ -46,6 +47,7 @@ public class ItemPedido
 }
 public class Pedido
 {
+
     public int Id { get; private set; }
     public Cliente Cliente { get; private set; }
     public List<ItemPedido> Itens { get; private set; }
@@ -65,6 +67,7 @@ public class Pedido
         return Itens.Sum(item => item.CalcularSubtotal());
     }
 }
+
 public interface IDescontoStrategy
 {
     decimal CalcularDesconto(Pedido pedido);
@@ -106,6 +109,22 @@ public class DescontoPorQuantidade : IDescontoStrategy
     }
 
 }
+public class PedidoFactory
+{
+    public static Pedido CriarPedido(int id, Cliente cliente, List<ItemPedido> itens, List<IDescontoStrategy> estrategiasDeDesconto)
+    {
+        var pedido = new Pedido(id, cliente, itens);
+
+        foreach (var estrategia in estrategiasDeDesconto)
+        {
+            var desconto = estrategia.CalcularDesconto(pedido);
+            pedido.ValorTotal -= desconto;
+        }
+
+        return pedido;
+    }
+}
+
 
 
 
